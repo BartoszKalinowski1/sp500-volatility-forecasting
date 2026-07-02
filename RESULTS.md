@@ -1,7 +1,6 @@
 # Results Log — S&P 500 Volatility Forecasting
 
-Running log of statistical test results and model outputs, collected day by day.
-Copy relevant sections into the final README on Day 7.
+Running log of statistical test results and model outputs.
 
 ## Data & Stationarity Tests
 
