@@ -29,3 +29,27 @@ realized estimate produces a 45.7% difference in the theoretical option price fo
 contract. This is a direct practical consequence of the volatility clustering confirmed
 statistically in 01_data_and_stationarity — motivating the need for a model that forecasts volatility dynamically
 rather than assuming it is constant.
+
+## Feature Engineering & Correlation Analysis
+
+Target: realized volatility over the next 21 trading days (forward-looking, no leakage).
+
+| Feature | Correlation with future 21-day volatility |
+|---|---|
+| realized_volatility_5 | 0.535 |
+| realized_volatility_18 | 0.505 |
+| realized_volatility_21 | 0.490 |
+| volume_ma_5 | 0.410 |
+| volume_change | 0.019 |
+| day_of_week | 0.002 |
+| return_lag_5 | -0.091 |
+| return_lag_3 | -0.110 |
+| return_lag_2 | -0.118 |
+| return_lag_1 | -0.129 |
+| month | -0.162 |
+
+**Interpretation:** Recent realized volatility (shortest 5-day window) is the strongest linear
+predictor of future volatility — consistent with the volatility clustering confirmed in 01_data_and_stationarity.
+Volume is meaningfully predictive; calendar and single-day lagged return features carry little
+to no linear signal individually. Selected features for modeling: realized volatility (5/18/21-day),
+volume_ma_5, and month.
