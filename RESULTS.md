@@ -16,3 +16,16 @@ Black-Scholes (fat tails, leptokurtosis). Returns (not raw prices) are the corre
 model, since they are stationary. Volatility clustering is statistically confirmed, justifying
 an attempt to forecast future volatility from past volatility.
 
+## Black-Scholes Volatility Sensitivity
+
+| Volatility assumption | σ (annualized) | Call option price |
+|---|---|---|
+| Historical (full sample) | 0.1796 | $154.80 |
+| Recent (21-day realized) | 0.0884 | $84.04 |
+
+**Interpretation:** Option prices computed via Black-Scholes are highly sensitive to the
+volatility input (Vega effect). Using a static historical volatility estimate versus a recent
+realized estimate produces a 45.7% difference in the theoretical option price for the same
+contract. This is a direct practical consequence of the volatility clustering confirmed
+statistically in 01_data_and_stationarity — motivating the need for a model that forecasts volatility dynamically
+rather than assuming it is constant.
