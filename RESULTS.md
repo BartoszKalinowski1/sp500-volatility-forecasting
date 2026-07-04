@@ -70,3 +70,23 @@ being inherently difficult to forecast (see 01_data_and_stationarity fat-tail fi
 multicollinearity across the three realized-volatility windows (18-day and 5-day positive,
 21-day negative), and `volume_ma_5` contributes essentially nothing once combined with
 volatility features despite its standalone correlation — motivating tree-based models in next part of project.
+
+## Tree-Based Models (Random Forest, XGBoost)
+
+| Model | RMSE | MAE | R² |
+|---|---|---|---|
+| Naive Baseline | 0.0906 | 0.0568 | — |
+| Linear Regression | 0.0730 | 0.0501 | 0.0924 |
+| Random Forest | 0.0915 | 0.0517 | -0.4236 |
+| XGBoost | 0.0951 | 0.0544 | -0.5397 |
+
+5-fold TimeSeriesSplit cross-validation: Random Forest CV RMSE = 0.1005 (±0.0482),
+XGBoost CV RMSE = 0.1118 (±0.0496) — confirming the poor test-set performance is not a
+one-off artifact of the specific train/test split.
+
+**Interpretation:** Both tree-based models underperform Linear Regression and even the naive
+baseline, with negative R² indicating worse-than-mean predictions on the test period. This is
+most likely driven by a regime shift between training (2015–2023, including the 2020 shock)
+and test (2023–2025) periods — the trees overfit patterns from training data that don't
+generalize to a different volatility regime, while linear regression's simpler form is more
+robust to this shift. Linear Regression remains the best model so far.
