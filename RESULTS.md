@@ -53,3 +53,20 @@ predictor of future volatility — consistent with the volatility clustering con
 Volume is meaningfully predictive; calendar and single-day lagged return features carry little
 to no linear signal individually. Selected features for modeling: realized volatility (5/18/21-day),
 volume_ma_5, and month.
+
+## Baseline & Linear Regression
+
+Chronological 80/20 train-test split (test set: 2023-09-29 to 2025-12-01), 545 test observations.
+
+| Model | RMSE | MAE | R² |
+|---|---|---|---|
+| Naive baseline | 0.0906 | 0.0568 | — |
+| Linear Regression | 0.0730 | 0.0501 | 0.0924 |
+
+**Interpretation:** Linear regression outperforms the naive baseline (RMSE -19%, MAE -12%),
+confirming the engineered features add real predictive value. However, R² = 0.092 indicates
+the model explains only ~9% of the variance in future volatility, consistent with markets
+being inherently difficult to forecast (see 01_data_and_stationarity fat-tail findings). Model coefficients show
+multicollinearity across the three realized-volatility windows (18-day and 5-day positive,
+21-day negative), and `volume_ma_5` contributes essentially nothing once combined with
+volatility features despite its standalone correlation — motivating tree-based models in next part of project.
