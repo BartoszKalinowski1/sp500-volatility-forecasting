@@ -90,3 +90,34 @@ most likely driven by a regime shift between training (2015–2023, including th
 and test (2023–2025) periods — the trees overfit patterns from training data that don't
 generalize to a different volatility regime, while linear regression's simpler form is more
 robust to this shift. Linear Regression remains the best model so far.
+
+## GARCH(1,1) and Final Model Comparison
+
+GARCH(1,1) with Student's t innovations, rolling 21-day forecast (524 refits across test period).
+
+| Parameter | Coefficient | p-value |
+|---|---|---|
+| ω | 0.0187 | 0.0016 |
+| α | 0.1771 | < 0.001 |
+| β | 0.8229 | < 0.001 |
+| ν (t-dist) | 5.61 | < 0.001 |
+
+High β confirms strong volatility persistence (consistent with 01_data_and_stationarity Ljung-Box result);
+low ν confirms fat-tailed innovations (consistent with 01_data_and_stationarity Jarque-Bera result).
+
+### Final Comparison — All Models
+
+| Model | RMSE | MAE | R² |
+|---|---|---|---|
+| **Linear Regression** | **0.0730** | **0.0501** | **0.0924** |
+| Naive Baseline | 0.0906 | 0.0568 | — |
+| GARCH(1,1) | 0.0909 | 0.0599 | -0.3590 |
+| Random Forest | 0.0915 | 0.0517 | -0.4236 |
+| XGBoost | 0.0951 | 0.0544 | -0.5397 |
+
+**Conclusion:** Linear Regression outperforms all other models, including the purpose-built
+econometric GARCH model and both tree-based ML models. All four non-linear-regression models
+(baseline, GARCH, RF, XGBoost) perform similarly poorly, most likely due to a volatility regime
+shift between the training period (2015–2023) and test period (2023–2025). This is a genuine,
+reproducible finding — not an artifact of a single split — reinforcing that added model
+complexity does not guarantee improved forecasts in financial time series.
