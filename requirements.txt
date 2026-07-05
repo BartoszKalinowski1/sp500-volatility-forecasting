@@ -1,12 +1,11 @@
 pandas
 numpy
 matplotlib
+seaborn
 scipy
 statsmodels
-ipykernel
-yfinance
-seaborn
-EOF
 scikit-learn
 xgboost
 arch
+yfinance
+ipykernel
