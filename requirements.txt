@@ -7,3 +7,6 @@ ipykernel
 yfinance
 seaborn
 EOF
+scikit-learn
+xgboost
+arch
